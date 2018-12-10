@@ -242,9 +242,11 @@ Gradle will report a build failure in case the configured checksum does not matc
 [[wrapper_checksum_verification]]
 == Verifying the checksum of the Gradle Wrapper JAR
 
-Since the Wrapper JAR file is usually checked in to a project's version control system, verifying its checksum provides a simple way to check its integrity.
-In addition, as with all binary artifacts, it's a way to ensure that it has not been tampered with, for example when reviewing a pull request that upgrades the Wrapper JAR in an open source project.
-The checksum of the Wrapper JAR is published alongside the corresponding Gradle distribution on https://services.gradle.org/.
+The Wrapper JAR is an executable binary file that is usually checked in to a project's version control system.
+As such, there is the potential for a malicious actor to replace the original JAR with a modified one thereby injecting arbitrary code that will be executed on the computers of developers and build servers.
+In order to allow checking the integrity of the Wrapper JAR, Gradle publishes the checksums of all releases (except for Gradle 3.3, 3.4, 3.4.1, 3.5, 3.5.1, 4.0, 4.0.1, and 4.0.2) alongside the corresponding Gradle distribution on https://services.gradle.org/.
+You can verify the checksum of the Wrapper JAR to ensure that it has not been tampered with, for example when reviewing a pull request that upgrades the Wrapper JAR in an open source project.
+Here are the commands you can run on the major operating systems to manually verify a Wrapper JAR's checksum:
 
 [source,bash,subs=+attributes]
 .Manually verifying the checksum of the Wrapper JAR on Linux
