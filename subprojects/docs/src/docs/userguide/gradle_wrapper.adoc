@@ -278,3 +278,36 @@ gradle-wrapper.jar: OK
 > @{$true = 'OK: Checksum match'; $false = "ERROR: Checksum mismatch!`nExpected: $expected`nActual:   $actual"}[$actual -eq $expected]
 OK: Checksum match
 ----
+
+=== Troubleshooting a checksum mismatch
+
+If the checksum does not match the one you expected, chances are the `wrapper` task wasn't executed with the upgraded Gradle distribution.
+Thus, you should first check whether the actual checksum matches the one of a different Gradle version.
+Here are the commands you can run on the major operating systems to generate the actual checksum of the Wrapper JAR:
+
+[source,bash,subs=+attributes]
+.Generating the actual checksum of the Wrapper JAR on Linux
+----
+$ sha256sum gradle/wrapper/gradle-wrapper.jar
+d81e0f23ade952b35e55333dd5f1821585e887c6d24305aeea2fbc8dad564b95  gradle/wrapper/gradle-wrapper.jar
+----
+
+[source,bash,subs=+attributes]
+.Generating the actual checksum of the Wrapper JAR on macOS
+----
+$ shasum --algorithm=256 gradle/wrapper/gradle-wrapper.jar
+d81e0f23ade952b35e55333dd5f1821585e887c6d24305aeea2fbc8dad564b95  gradle/wrapper/gradle-wrapper.jar
+----
+
+[source,powershell,subs=+attributes]
+.Generating the actual checksum of the Wrapper JAR on Windows (using PowerShell)
+----
+> (Get-FileHash gradle\wrapper\gradle-wrapper.jar -Algorithm SHA256).Hash.ToLower()
+d81e0f23ade952b35e55333dd5f1821585e887c6d24305aeea2fbc8dad564b95
+----
+
+Once you know the actual checksum, check whether it's listed on https://gradle.org/wrapper-checksums/.
+If so, you should run the `wrapper` task again to update the Wrapper JAR so it matches the Gradle version in `gradle/wrapper/gradle-wrapper.properties`.
+If not, the Wrapper JAR might be from a milestone, release candidate, or nightly build -- or it might not be legit.
+You should try to find out how it was generated but treat it as untrustworthy until proven otherwise.
+If you think it was manipulated, please let the Gradle team know by sending an email to mailto:security@gradle.com[security@gradle.com].
