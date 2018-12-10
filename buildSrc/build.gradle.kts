@@ -24,7 +24,7 @@ import java.io.File
 import java.util.Properties
 
 plugins {
-    `kotlin-dsl`
+    `kotlin-dsl` version "1.0.6"
     id("org.gradle.kotlin.ktlint-convention") version "0.1.15" apply false
 }
 
